@@ -1,22 +1,6 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-import requests
+from app.api.chat import router as chat_router
 
-app = FastAPI()
+app = FastAPI(title="Jammi E-commerce Assistant")
 
-class ChatRequest(BaseModel):
-    message: str
-
-@app.post("/chat")
-def chat(request: ChatRequest):
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={
-            "model": "jammi-ecommerce",
-            "prompt": request.message,
-            "stream": False
-        }
-    )
-
-    data = response.json()
-    return {"response": data["response"]}
+app.include_router(chat_router)

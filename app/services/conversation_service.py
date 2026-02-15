@@ -1,0 +1,16 @@
+from typing import Dict, List
+
+# Memoria temporal en RAM
+conversations: Dict[str, List[dict]] = {}
+
+def get_conversation(session_id: str):
+    return conversations.get(session_id, [])
+
+def add_message(session_id: str, role: str, content: str):
+    if session_id not in conversations:
+        conversations[session_id] = []
+    
+    conversations[session_id].append({
+        "role": role,
+        "content": content
+    })
